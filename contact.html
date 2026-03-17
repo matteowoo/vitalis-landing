@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — VITALIS</title>
+  <meta name="description" content="Book your initial assessment and take the first step toward precision health with Vitalis Health Group.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['DM Sans', 'sans-serif'],
+          serif: ['Cormorant Garamond', 'serif'],
+        },
+        colors: {
+          forest: { DEFAULT: '#1A5C4A', light: '#2A7A62' },
+          gold: { DEFAULT: '#C9993A', light: '#E8B84B' },
+          cream: '#F7F3EC',
+          'warm-white': '#FDFAF5',
+          dark: '#0f1f17',
+        },
+      }
+    }
+  }
+  </script>
+</head>
+<body class="bg-warm-white text-gray-900 antialiased font-sans">
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="index.html" class="nav-logo flex items-center gap-2.5 text-gray-900">
+        <span class="text-lg font-bold tracking-[0.3em] uppercase">Vitalis</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="protocol.html" class="nav-link text-sm font-medium text-gray-600">Protocol</a>
+        <a href="what-to-expect.html" class="nav-link text-sm font-medium text-gray-600">What to Expect</a>
+        <a href="services.html" class="nav-link text-sm font-medium text-gray-600">Services</a>
+        <a href="memberships.html" class="nav-link text-sm font-medium text-gray-600">Memberships</a>
+        <a href="about.html" class="nav-link text-sm font-medium text-gray-600">About</a>
+        <a href="faqs.html" class="nav-link text-sm font-medium text-gray-600">FAQs</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="contact.html" class="nav-cta btn-primary text-sm !py-2.5 !px-5">Book Assessment</a>
+        <div class="hamburger md:hidden text-gray-900"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu md:hidden">
+    <a href="index.html">Home</a><a href="protocol.html">Protocol</a><a href="what-to-expect.html">What to Expect</a><a href="services.html">Services</a><a href="memberships.html">Memberships</a><a href="about.html">About</a><a href="faqs.html">FAQs</a><a href="contact.html">Contact</a>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- HERO -->
+  <!-- ============================================ -->
+  <section class="page-hero bg-warm-white py-24">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <div class="reveal">
+        <span class="eyebrow">Get Started</span>
+        <h1 class="font-serif text-4xl md:text-6xl mt-4 mb-6 leading-tight text-gray-900">
+          Let's begin.
+        </h1>
+        <p class="text-gray-500 text-lg leading-relaxed">
+          Book your initial assessment and take the first step toward precision health.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- CONTACT SECTION -->
+  <!-- ============================================ -->
+  <section class="bg-warm-white py-12">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="reveal grid md:grid-cols-5 gap-16">
+
+        <!-- Left: Form (3/5 width) -->
+        <div class="md:col-span-3">
+          <form id="contact-form" class="space-y-4">
+            <input type="text" name="name" placeholder="Full name" required class="form-input">
+            <input type="email" name="email" placeholder="Email address" required class="form-input">
+            <input type="tel" name="phone" placeholder="Phone number" required class="form-input">
+            <select name="interest" class="form-input" required>
+              <option value="" disabled selected>I'm interested in...</option>
+              <option value="protocol">Vitalis Protocol ($995/month)</option>
+              <option value="elite">Vitalis Elite ($2,995/month)</option>
+              <option value="learn-more">Just want to learn more</option>
+            </select>
+            <textarea name="message" class="form-input" rows="4" placeholder="Tell us about your goals (optional)"></textarea>
+            <button type="submit" class="btn-primary w-full">Book My Assessment</button>
+            <p class="text-gray-400 text-sm text-center mt-3">We'll reach out within 24 hours to schedule your initial consultation.</p>
+          </form>
+
+          <div id="success-message" class="hidden mt-6">
+            <div class="bg-cream border border-forest/20 rounded-xl p-8 text-center">
+              <p class="text-forest font-semibold text-lg mb-2">Thank you!</p>
+              <p class="text-gray-600 text-sm">We've received your details and will be in touch within 24 hours.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Contact Info (2/5 width) -->
+        <div class="md:col-span-2">
+          <div class="space-y-8">
+            <div>
+              <h4 class="font-semibold mb-2 text-gray-900">Email</h4>
+              <p class="text-gray-500">admin@vitalishealth.com</p>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-2 text-gray-900">Location</h4>
+              <p class="text-gray-500">Perth, W.A — Osborne Park</p>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-2 text-gray-900">Response time</h4>
+              <p class="text-gray-500">We typically respond within 24 hours.</p>
+            </div>
+            <div class="border-t border-gray-200 my-8"></div>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              Your data is yours. Every biomarker, every scan, every result — you own it, and you understand it. We will never share your information with third parties.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================ -->
+  <footer class="footer py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-12 mb-16">
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <span class="text-lg font-bold tracking-[0.3em] uppercase text-white">Vitalis</span>
+          </div>
+          <p class="text-white/50 text-sm leading-relaxed">Precision health. Personalised protocols. Integrated care.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-5 text-white">Navigate</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="protocol.html">Protocol</a></li>
+            <li><a href="what-to-expect.html">What to Expect</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="memberships.html">Memberships</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="faqs.html">FAQs</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-5 text-white">Ecosystem</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="services.html">Beyond Health</a></li>
+            <li><a href="services.html">Merse Wellness</a></li>
+            <li><a href="services.html">Fitness Cartel</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-5 text-white">Contact</h4>
+          <ul class="space-y-3 text-sm text-white/50">
+            <li>admin@vitalishealth.com</li>
+            <li>Perth, W.A</li>
+          </ul>
+          <a href="contact.html" class="btn-primary-light text-sm !py-2 !px-5 mt-5">Get in Touch</a>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="text-white/30 text-sm">&copy; 2026 Vitalis Health Group. All rights reserved.</div>
+        <div class="flex gap-6 text-sm text-white/30">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
