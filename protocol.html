@@ -29,6 +29,579 @@
       }
     }
   </script>
+
+  <style>
+    /* =============================================
+       PROTOCOL PAGE — Premium Interactive Styles
+       ============================================= */
+
+    /* --- Hero --- */
+    .protocol-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #FDFAF5 0%, #F7F3EC 50%, #FDFAF5 100%);
+    }
+    .protocol-hero::before {
+      content: '';
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,153,58,0.07) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: heroGlow 10s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .protocol-hero::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,92,74,0.04) 0%, transparent 70%);
+      top: 30%;
+      left: 30%;
+      transform: translate(-50%, -50%);
+      animation: heroGlow 12s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+    @keyframes heroGlow {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+      50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+    }
+
+    .hero-rule {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto;
+      animation: ruleExpand 2s 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes ruleExpand {
+      to { width: 120px; }
+    }
+
+    .hero-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: wordReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes wordReveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: scrollBounce 2s ease-in-out infinite;
+      opacity: 0;
+      animation-delay: 2.5s;
+      animation-fill-mode: forwards;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+      50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+    }
+    .scroll-indicator span {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+    .scroll-indicator svg {
+      color: var(--gold);
+    }
+
+    /* --- Stage Navigator (Sticky) --- */
+    .stage-nav {
+      position: fixed;
+      left: 2.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 30;
+      display: none;
+      flex-direction: column;
+      gap: 0;
+    }
+    @media (min-width: 1280px) {
+      .stage-nav { display: flex; }
+    }
+    .stage-nav-line {
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: #e5e5e0;
+      border-radius: 1px;
+    }
+    .stage-nav-progress {
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      width: 2px;
+      height: 0;
+      background: linear-gradient(to bottom, var(--forest), var(--gold));
+      border-radius: 1px;
+      transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stage-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+    .stage-nav-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #e5e5e0;
+      background: var(--bg-warm-white);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+    .stage-nav-item.active .stage-nav-dot {
+      border-color: var(--gold);
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201,153,58,0.15);
+    }
+    .stage-nav-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+    .stage-nav-item.active .stage-nav-label {
+      color: var(--text-primary);
+    }
+
+    /* --- Stage Sections --- */
+    .protocol-stage {
+      position: relative;
+      overflow: hidden;
+    }
+    .stage-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(6rem, 15vw, 12rem);
+      font-weight: 300;
+      color: rgba(26,92,74,0.04);
+      position: absolute;
+      right: -1rem;
+      top: 2rem;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* --- Biomarker Cards --- */
+    .biomarker-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .biomarker-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .biomarker-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: 0.375rem;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .biomarker-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .biomarker-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--forest), var(--gold));
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .biomarker-card:hover {
+      border-color: rgba(26,92,74,0.2);
+      box-shadow: 0 8px 32px rgba(26,92,74,0.06);
+      transform: translateY(-3px);
+    }
+    .biomarker-card:hover::before {
+      transform: scaleY(1);
+    }
+    .biomarker-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--bg-cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.875rem;
+      transition: background 0.3s ease;
+    }
+    .biomarker-card:hover .biomarker-icon {
+      background: rgba(26,92,74,0.08);
+    }
+    .biomarker-icon svg {
+      width: 18px;
+      height: 18px;
+      color: var(--forest);
+    }
+    .biomarker-card h4 {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      margin-bottom: 0.375rem;
+    }
+    .biomarker-card p {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* --- Stats Strip --- */
+    .stats-strip {
+      background: var(--forest);
+      position: relative;
+      overflow: hidden;
+    }
+    .stats-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,153,58,0.08) 0%, transparent 50%, rgba(201,153,58,0.04) 100%);
+      pointer-events: none;
+    }
+    .stat-item {
+      text-align: center;
+      position: relative;
+    }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 300;
+      color: white;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .stat-divider {
+      width: 1px;
+      height: 3rem;
+      background: rgba(255,255,255,0.15);
+      align-self: center;
+    }
+
+    /* --- Blueprint Cards --- */
+    .blueprint-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: 0.375rem;
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-style: preserve-3d;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .blueprint-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .blueprint-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--forest), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .blueprint-card:hover {
+      border-color: rgba(26,92,74,0.2);
+      box-shadow: 0 12px 40px rgba(26,92,74,0.07);
+    }
+    .blueprint-card:hover::after {
+      transform: scaleX(1);
+    }
+    .blueprint-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      line-height: 1;
+    }
+    .blueprint-card h4 {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      margin-bottom: 0.375rem;
+    }
+    .blueprint-card p {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* --- Interactive Timeline --- */
+    .timeline-track {
+      position: relative;
+      padding: 3rem 0;
+    }
+    .timeline-bar-bg {
+      height: 3px;
+      background: #e5e5e0;
+      border-radius: 2px;
+      position: relative;
+    }
+    .timeline-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--forest), var(--forest-light), var(--gold));
+      border-radius: 2px;
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .timeline-nodes {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-top: -10px;
+    }
+    .timeline-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+    .timeline-node-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg-white);
+      border: 3px solid #e5e5e0;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      z-index: 2;
+    }
+    .timeline-node.reached .timeline-node-dot {
+      border-color: var(--gold);
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(201,153,58,0.15);
+    }
+    .timeline-node-label {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .timeline-node-day {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      transition: color 0.3s ease;
+    }
+    .timeline-node.reached .timeline-node-day {
+      color: var(--gold);
+    }
+    .timeline-node-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      margin-top: 0.25rem;
+    }
+    .timeline-node-desc {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+      max-width: 180px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .timeline-node.reached .timeline-node-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reassess-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+      justify-content: center;
+    }
+    .reassess-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--forest);
+      background: var(--bg-cream);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.2s ease, background 0.2s ease;
+    }
+    .reassess-tag.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .reassess-tag:hover {
+      border-color: rgba(26,92,74,0.2);
+      background: rgba(26,92,74,0.06);
+    }
+
+    /* --- FAQ Enhancements --- */
+    .protocol-faq .accordion-item {
+      border-bottom: 1px solid var(--border-light);
+      transition: border-color 0.3s ease;
+    }
+    .protocol-faq .accordion-item.active {
+      border-bottom-color: var(--gold);
+    }
+    .protocol-faq .accordion-trigger {
+      padding: 1.75rem 0;
+    }
+
+    /* --- CTA Section --- */
+    .protocol-cta {
+      position: relative;
+      overflow: hidden;
+      background: var(--forest);
+    }
+    .protocol-cta::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,153,58,0.1) 0%, transparent 70%);
+      top: 50%;
+      right: -10%;
+      transform: translateY(-50%);
+      animation: ctaGlow 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .protocol-cta::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,92,74,0.3) 0%, transparent 70%);
+      bottom: -20%;
+      left: 10%;
+      animation: ctaGlow 10s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+    @keyframes ctaGlow {
+      0%, 100% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(1.2); }
+    }
+
+    .magnetic-btn {
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .magnetic-btn::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    .magnetic-btn:hover::before {
+      opacity: 1;
+    }
+
+    /* --- Gold connecting line between stages --- */
+    .stage-connector {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      overflow: hidden;
+    }
+    .stage-connector-line {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: 0;
+      animation: connectorReveal 1s ease forwards;
+    }
+    @keyframes connectorReveal {
+      to { opacity: 0.4; }
+    }
+
+    /* --- Philosophy quote --- */
+    .philosophy-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* Smooth transitions for all reveal elements on this page */
+    .protocol-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .protocol-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body class="bg-warm-white antialiased font-sans">
 
@@ -56,157 +629,294 @@
     <a href="index.html">Home</a><a href="protocol.html">Protocol</a><a href="what-to-expect.html">What to Expect</a><a href="services.html">Services</a><a href="memberships.html">Memberships</a><a href="about.html">About</a><a href="faqs.html">FAQs</a><a href="contact.html">Contact</a>
   </div>
 
-  <!-- Hero -->
-  <section class="page-hero bg-warm-white py-24 md:py-32">
-    <div class="max-w-3xl mx-auto px-6 text-center reveal">
-      <span class="eyebrow">The Vitalis Protocol</span>
-      <h1 class="font-serif text-4xl md:text-6xl text-gray-900 mt-4 mb-6 leading-tight">Precision medicine, rebuilt from the ground up.</h1>
-      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">We measure everything, build your individual blueprint, then intervene with precision. Every 90 days, we reassess and evolve.</p>
-      <a href="contact.html" class="btn-primary">Start Your Protocol</a>
+  <!-- ============================================
+       STICKY STAGE NAVIGATOR
+       ============================================ -->
+  <div class="stage-nav" id="stageNav">
+    <div class="stage-nav-line"></div>
+    <div class="stage-nav-progress" id="stageNavProgress"></div>
+    <div class="stage-nav-item active" data-target="stage1">
+      <div class="stage-nav-dot"></div>
+      <span class="stage-nav-label">Measure</span>
+    </div>
+    <div class="stage-nav-item" data-target="stage2">
+      <div class="stage-nav-dot"></div>
+      <span class="stage-nav-label">Blueprint</span>
+    </div>
+    <div class="stage-nav-item" data-target="stage3">
+      <div class="stage-nav-dot"></div>
+      <span class="stage-nav-label">Iterate</span>
+    </div>
+  </div>
+
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <section class="protocol-hero" id="protocolHero">
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+      <span class="eyebrow" style="animation: wordReveal 0.8s 0.2s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0;">The Vitalis Protocol</span>
+
+      <div class="hero-rule"></div>
+
+      <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl text-gray-900 mb-6 leading-[1.1]">
+        <span class="hero-word" style="animation-delay: 0.4s">Precision</span>
+        <span class="hero-word" style="animation-delay: 0.55s">medicine,</span><br class="hidden sm:block">
+        <span class="hero-word" style="animation-delay: 0.7s">rebuilt</span>
+        <span class="hero-word" style="animation-delay: 0.85s">from</span>
+        <span class="hero-word" style="animation-delay: 1.0s">the</span>
+        <span class="hero-word" style="animation-delay: 1.15s">ground</span>
+        <span class="hero-word" style="animation-delay: 1.3s">up.</span>
+      </h1>
+
+      <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed hero-word" style="animation-delay: 1.6s;">
+        We measure everything, build your individual blueprint, then intervene with precision. Every 90 days, we reassess and evolve.
+      </p>
+
+      <a href="contact.html" class="btn-primary hero-word" style="animation-delay: 1.9s;">Start Your Protocol</a>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <svg width="16" height="24" viewBox="0 0 16 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 4v16m0 0l-5-5m5 5l5-5"/>
+      </svg>
     </div>
   </section>
 
-  <!-- Stage 1: Measure Everything -->
-  <section class="bg-white py-24">
+  <!-- ============================================
+       STAGE 01 — MEASURE EVERYTHING
+       ============================================ -->
+  <section class="protocol-stage bg-white py-24 md:py-32" id="stage1">
+    <div class="stage-number">01</div>
     <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-16 items-center">
-        <div class="reveal">
-          <span class="eyebrow">Stage 01</span>
-          <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mt-4 mb-6 leading-tight">Measure Everything</h2>
-          <p class="text-gray-500 leading-relaxed">Comprehensive biomarker analysis, movement screening, and structural assessment — mapping your complete biological landscape before a single intervention is prescribed.</p>
-        </div>
-        <div class="reveal reveal-delay-1">
-          <div class="card space-y-4">
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Hormonal profiles: cortisol, testosterone, oestrogen, DHEA, thyroid</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Micronutrient status: vitamins, minerals, deficiency mapping</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Inflammatory markers: CRP, homocysteine, oxidative stress</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Metabolic health: insulin sensitivity, HbA1c, lipid fractions</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Body composition via DEXA: bone density, lean mass, visceral fat</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Environmental burden: microplastic and heavy metal load</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">HRV and nervous system tone baseline</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Movement screen: gait, symmetry, mobility, structural integrity</p>
-            </div>
+      <!-- Section header -->
+      <div class="max-w-2xl mb-16 protocol-reveal">
+        <span class="eyebrow">Stage 01</span>
+        <h2 class="font-serif text-3xl md:text-5xl text-gray-900 mt-4 mb-6 leading-tight">Measure Everything</h2>
+        <p class="text-gray-400 text-lg leading-relaxed">Comprehensive biomarker analysis, movement screening, and structural assessment — mapping your complete biological landscape before a single intervention is prescribed.</p>
+      </div>
+
+      <!-- Biomarker card grid -->
+      <div class="biomarker-grid" id="biomarkerGrid">
+        <div class="biomarker-card" data-delay="0">
+          <div class="biomarker-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
+          <h4>Hormonal Profiles</h4>
+          <p>Cortisol, testosterone, oestrogen, DHEA, full thyroid panel — mapped across your circadian rhythm.</p>
+        </div>
+        <div class="biomarker-card" data-delay="1">
+          <div class="biomarker-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+          </div>
+          <h4>Micronutrient Status</h4>
+          <p>Vitamins, minerals, and deficiency mapping — not guesswork, but measured biochemistry.</p>
+        </div>
+        <div class="biomarker-card" data-delay="2">
+          <div class="biomarker-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z"/><path d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1.001A3.75 3.75 0 0012 18z"/></svg>
+          </div>
+          <h4>Inflammatory Markers</h4>
+          <p>CRP, homocysteine, oxidative stress — the hidden drivers of chronic disease and ageing.</p>
+        </div>
+        <div class="biomarker-card" data-delay="3">
+          <div class="biomarker-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+          </div>
+          <h4>Metabolic Health</h4>
+          <p>Insulin sensitivity, HbA1c, lipid fractions — your metabolic engine, quantified.</p>
+        </div>
+        <div class="biomarker-card" data-delay="4">
+          <div class="biomarker-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+          </div>
+          <h4>Body Composition</h4>
+          <p>DEXA-scanned bone density, lean mass distribution, visceral fat — beyond the scale.</p>
+        </div>
+        <div class="biomarker-card" data-delay="5">
+          <div class="biomarker-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>
+          </div>
+          <h4>Environmental Burden</h4>
+          <p>Microplastic and heavy metal load — what your environment is doing to your biology.</p>
+        </div>
+        <div class="biomarker-card" data-delay="6">
+          <div class="biomarker-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+          </div>
+          <h4>Nervous System Tone</h4>
+          <p>HRV baseline and autonomic balance — the foundation of recovery and resilience.</p>
+        </div>
+        <div class="biomarker-card" data-delay="7">
+          <div class="biomarker-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+          </div>
+          <h4>Movement Screen</h4>
+          <p>Gait analysis, symmetry assessment, mobility, and structural integrity — your mechanical blueprint.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Stage 2: Build the Individual Blueprint -->
-  <section class="section-cream py-24">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-16 items-center">
-        <div class="reveal">
-          <div class="card space-y-4">
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Cold exposure matched to cortisol curve</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Heat therapy tuned to goals: detox, cardiovascular, fertility protection</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Nutritional prescriptions built from actual deficiencies</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Hyperbaric oxygen dosed to inflammatory profile</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Chiro, physio, podiatry, EP triggered by structural data</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Bone density programs integrating load, nutrition, allied health</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Supplement stack derived from bloodwork</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="text-gold mt-1 text-sm">&#x2794;</span>
-              <p class="text-gray-600">Training periodised around recovery capacity</p>
-            </div>
-          </div>
+  <!-- Connector -->
+  <div class="stage-connector"><div class="stage-connector-line protocol-reveal"></div></div>
+
+  <!-- ============================================
+       STATS STRIP
+       ============================================ -->
+  <section class="stats-strip py-16 md:py-20" id="statsStrip">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+        <div class="stat-item protocol-reveal">
+          <div class="stat-number" data-count="60" data-suffix="+">0</div>
+          <div class="stat-label">Biomarkers Tested</div>
         </div>
-        <div class="reveal reveal-delay-1">
-          <span class="eyebrow">Stage 02</span>
-          <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mt-4 mb-6 leading-tight">Build the Individual Blueprint</h2>
-          <p class="text-gray-500 leading-relaxed">No two people receive the same plan. Every intervention — clinical, structural, wellness, and training — is calibrated to what your data reveals, not population averages.</p>
+        <div class="stat-divider hidden md:block"></div>
+        <div class="stat-item protocol-reveal" style="transition-delay: 0.1s">
+          <div class="stat-number" data-count="8">0</div>
+          <div class="stat-label">Clinical Domains</div>
+        </div>
+        <div class="stat-divider hidden md:block"></div>
+        <div class="stat-item protocol-reveal" style="transition-delay: 0.2s">
+          <div class="stat-number" data-count="90" data-suffix="-day">0</div>
+          <div class="stat-label">Protocol Cycles</div>
+        </div>
+        <div class="stat-divider hidden md:block"></div>
+        <div class="stat-item protocol-reveal" style="transition-delay: 0.3s">
+          <div class="stat-number" data-count="1" data-suffix="">0</div>
+          <div class="stat-label">Blueprint. Yours.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Stage 3: Intervene, Track, Iterate -->
-  <section class="bg-white py-24">
+  <!-- ============================================
+       STAGE 02 — BUILD THE INDIVIDUAL BLUEPRINT
+       ============================================ -->
+  <section class="protocol-stage py-24 md:py-32" id="stage2" style="background: var(--bg-cream);">
+    <div class="stage-number" style="color: rgba(201,153,58,0.06);">02</div>
     <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-16 items-center">
-        <div class="reveal">
+      <!-- Section header -->
+      <div class="max-w-2xl mb-16 protocol-reveal">
+        <span class="eyebrow">Stage 02</span>
+        <h2 class="font-serif text-3xl md:text-5xl text-gray-900 mt-4 mb-6 leading-tight">Build the Individual Blueprint</h2>
+        <p class="text-gray-400 text-lg leading-relaxed">No two people receive the same plan. Every intervention — clinical, structural, wellness, and training — is calibrated to what your data reveals, not population averages.</p>
+      </div>
+
+      <!-- Blueprint cards grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="blueprintGrid">
+        <div class="blueprint-card" data-delay="0">
+          <div class="blueprint-num">01</div>
+          <h4>Cold Exposure</h4>
+          <p>Matched to your cortisol curve and adrenal capacity.</p>
+        </div>
+        <div class="blueprint-card" data-delay="1">
+          <div class="blueprint-num">02</div>
+          <h4>Heat Therapy</h4>
+          <p>Tuned to your goals: detox, cardiovascular, fertility protection.</p>
+        </div>
+        <div class="blueprint-card" data-delay="2">
+          <div class="blueprint-num">03</div>
+          <h4>Nutritional Rx</h4>
+          <p>Built from actual deficiencies, not generic dietary guidelines.</p>
+        </div>
+        <div class="blueprint-card" data-delay="3">
+          <div class="blueprint-num">04</div>
+          <h4>Hyperbaric Oxygen</h4>
+          <p>Dosed to your inflammatory profile and recovery demands.</p>
+        </div>
+        <div class="blueprint-card" data-delay="4">
+          <div class="blueprint-num">05</div>
+          <h4>Allied Health</h4>
+          <p>Chiro, physio, podiatry, EP — triggered by structural data.</p>
+        </div>
+        <div class="blueprint-card" data-delay="5">
+          <div class="blueprint-num">06</div>
+          <h4>Bone Density</h4>
+          <p>Programs integrating load, nutrition, and allied health.</p>
+        </div>
+        <div class="blueprint-card" data-delay="6">
+          <div class="blueprint-num">07</div>
+          <h4>Supplement Stack</h4>
+          <p>Derived from bloodwork. No guessing. No unnecessary spend.</p>
+        </div>
+        <div class="blueprint-card" data-delay="7">
+          <div class="blueprint-num">08</div>
+          <h4>Training Program</h4>
+          <p>Periodised around your recovery capacity and biological readiness.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Connector -->
+  <div class="stage-connector" style="background: var(--bg-cream);"><div class="stage-connector-line protocol-reveal"></div></div>
+
+  <!-- ============================================
+       STAGE 03 — INTERVENE, TRACK, ITERATE
+       ============================================ -->
+  <section class="protocol-stage bg-white py-24 md:py-32" id="stage3">
+    <div class="stage-number">03</div>
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-start">
+        <!-- Left: Text -->
+        <div class="protocol-reveal">
           <span class="eyebrow">Stage 03</span>
-          <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mt-4 mb-6 leading-tight">Intervene, Track, Iterate</h2>
-          <p class="text-gray-500 leading-relaxed">Every protocol is a living document. We retest. We reassess. We refine. The system tells you what to do next — always.</p>
+          <h2 class="font-serif text-3xl md:text-5xl text-gray-900 mt-4 mb-6 leading-tight">Intervene, Track, Iterate</h2>
+          <p class="text-gray-400 text-lg leading-relaxed mb-8">Every protocol is a living document. We retest. We reassess. We refine. The system tells you what to do next — always.</p>
+
+          <!-- Philosophy quote -->
+          <div class="border-l-2 border-gold pl-6 py-2">
+            <p class="philosophy-quote text-xl md:text-2xl text-gray-600 leading-relaxed">
+              What gets measured, gets managed. What gets managed, gets optimised.
+            </p>
+          </div>
         </div>
-        <div class="reveal reveal-delay-1">
-          <div class="card">
-            <!-- Timeline Bar -->
-            <div class="flex items-center gap-4 mb-8">
-              <div class="flex-1 h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full w-full bg-gradient-to-r from-forest via-forest-light to-gold rounded-full"></div>
+
+        <!-- Right: Interactive Timeline -->
+        <div class="protocol-reveal" style="transition-delay: 0.15s">
+          <div class="bg-white border border-gray-100 rounded-lg p-8 md:p-10" style="box-shadow: 0 4px 24px rgba(26,92,74,0.04);">
+            <div class="timeline-track" id="timelineTrack">
+              <div class="timeline-bar-bg">
+                <div class="timeline-bar-fill" id="timelineFill"></div>
+              </div>
+              <div class="timeline-nodes">
+                <div class="timeline-node" data-progress="0">
+                  <div class="timeline-node-dot"></div>
+                  <div class="timeline-node-label">
+                    <div class="timeline-node-day">Day 1</div>
+                    <div class="timeline-node-title">Baseline</div>
+                    <div class="timeline-node-desc">Full assessment. Every marker mapped.</div>
+                  </div>
+                </div>
+                <div class="timeline-node" data-progress="50">
+                  <div class="timeline-node-dot"></div>
+                  <div class="timeline-node-label">
+                    <div class="timeline-node-day">Day 45</div>
+                    <div class="timeline-node-title">Mid-Review</div>
+                    <div class="timeline-node-desc">Check, adjust, recalibrate.</div>
+                  </div>
+                </div>
+                <div class="timeline-node" data-progress="100">
+                  <div class="timeline-node-dot"></div>
+                  <div class="timeline-node-label">
+                    <div class="timeline-node-day">Day 90</div>
+                    <div class="timeline-node-title">Full Reassess</div>
+                    <div class="timeline-node-desc">Complete retest. Protocol evolves.</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- Timeline Labels -->
-            <div class="grid grid-cols-3 gap-4 text-center mb-8">
-              <div>
-                <div class="text-sm text-gray-400 mb-1">Day 1</div>
-                <div class="text-sm font-semibold text-gray-900">Baseline</div>
-              </div>
-              <div>
-                <div class="text-sm text-gray-400 mb-1">Day 45</div>
-                <div class="text-sm font-semibold text-gray-900">Mid-Review</div>
-              </div>
-              <div>
-                <div class="text-sm text-gray-400 mb-1">Day 90</div>
-                <div class="text-sm font-semibold text-gray-900">Full Reassess</div>
-              </div>
-            </div>
-            <!-- Pill Tags -->
-            <div class="border-t border-gray-100 pt-6">
-              <div class="flex flex-wrap gap-2">
-                <span class="inline-block text-xs font-medium text-forest bg-cream px-3 py-1.5 rounded-full">Repeat bloodwork</span>
-                <span class="inline-block text-xs font-medium text-forest bg-cream px-3 py-1.5 rounded-full">DEXA rescan</span>
-                <span class="inline-block text-xs font-medium text-forest bg-cream px-3 py-1.5 rounded-full">HRV reassessment</span>
-                <span class="inline-block text-xs font-medium text-forest bg-cream px-3 py-1.5 rounded-full">Movement re-screen</span>
-                <span class="inline-block text-xs font-medium text-forest bg-cream px-3 py-1.5 rounded-full">Protocol updated</span>
-                <span class="inline-block text-xs font-medium text-forest bg-cream px-3 py-1.5 rounded-full">Supplements adjusted</span>
-                <span class="inline-block text-xs font-medium text-forest bg-cream px-3 py-1.5 rounded-full">Training progressed</span>
-              </div>
+
+            <!-- Reassessment tags -->
+            <div class="reassess-tags" id="reassessTags">
+              <span class="reassess-tag" data-delay="0">Repeat bloodwork</span>
+              <span class="reassess-tag" data-delay="1">DEXA rescan</span>
+              <span class="reassess-tag" data-delay="2">HRV reassessment</span>
+              <span class="reassess-tag" data-delay="3">Movement re-screen</span>
+              <span class="reassess-tag" data-delay="4">Protocol updated</span>
+              <span class="reassess-tag" data-delay="5">Supplements adjusted</span>
+              <span class="reassess-tag" data-delay="6">Training progressed</span>
             </div>
           </div>
         </div>
@@ -214,20 +924,23 @@
     </div>
   </section>
 
-  <!-- FAQ Accordion -->
-  <section class="section-cream py-24">
+  <!-- ============================================
+       FAQ ACCORDION
+       ============================================ -->
+  <section class="protocol-faq py-24 md:py-32" style="background: var(--bg-cream);">
     <div class="max-w-3xl mx-auto px-6">
-      <div class="text-center mb-16 reveal">
-        <h2 class="font-serif text-3xl md:text-4xl text-gray-900">Frequently asked questions</h2>
+      <div class="text-center mb-16 protocol-reveal">
+        <span class="eyebrow">Common Questions</span>
+        <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mt-4">Frequently asked questions</h2>
       </div>
-      <div class="reveal">
+      <div class="protocol-reveal" style="transition-delay: 0.1s">
         <div class="accordion-item">
           <button class="accordion-trigger">
             How long does a protocol cycle last?
             <svg class="accordion-icon w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="accordion-content">
-            <div class="accordion-body">90 days. Full reassessment at the end including blood, DEXA, HRV, movement screen.</div>
+            <div class="accordion-body">90 days. Full reassessment at the end including blood, DEXA, HRV, movement screen. Each cycle builds on the insights of the last.</div>
           </div>
         </div>
         <div class="accordion-item">
@@ -236,7 +949,7 @@
             <svg class="accordion-icon w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="accordion-content">
-            <div class="accordion-body">60+ markers: hormones, micronutrients, inflammation, metabolic health, body composition, environmental burden.</div>
+            <div class="accordion-body">60+ markers across eight clinical domains: hormones, micronutrients, inflammation, metabolic health, body composition, environmental burden, nervous system tone, and structural integrity.</div>
           </div>
         </div>
         <div class="accordion-item">
@@ -245,7 +958,7 @@
             <svg class="accordion-icon w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="accordion-content">
-            <div class="accordion-body">Yes. Most clients continue with rolling 90-day cycles. Each builds on the last.</div>
+            <div class="accordion-body">Yes. Most clients continue with rolling 90-day cycles. Each builds on the last — your protocol compounds over time, just like the results.</div>
           </div>
         </div>
         <div class="accordion-item">
@@ -254,19 +967,22 @@
             <svg class="accordion-icon w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="accordion-content">
-            <div class="accordion-body">At day 45, we check key metrics, assess response, adjust dosing, frequency, or modality selection.</div>
+            <div class="accordion-body">At day 45, we check key metrics, assess your response, and adjust dosing, frequency, or modality selection. Nothing is left to drift.</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA Banner -->
-  <section class="section-dark py-24">
-    <div class="max-w-3xl mx-auto px-6 text-center reveal">
-      <h2 class="font-serif text-3xl md:text-4xl text-white mb-6 leading-tight">Your data. Your plan. Your team.</h2>
-      <p class="text-white/60 text-lg mb-10 leading-relaxed">Book your initial assessment and take the first step toward precision health.</p>
-      <a href="contact.html" class="btn-primary-light">Book Your Assessment</a>
+  <!-- ============================================
+       CTA BANNER
+       ============================================ -->
+  <section class="protocol-cta py-24 md:py-32">
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10 protocol-reveal">
+      <span class="eyebrow" style="color: rgba(201,153,58,0.8);">Begin</span>
+      <h2 class="font-serif text-3xl md:text-5xl text-white mt-4 mb-6 leading-tight">Your data. Your plan.<br>Your team.</h2>
+      <p class="text-white/50 text-lg mb-12 leading-relaxed max-w-lg mx-auto">Book your initial assessment and take the first step toward precision health.</p>
+      <a href="contact.html" class="magnetic-btn btn-primary-light text-base !py-4 !px-8">Book Your Assessment</a>
     </div>
   </section>
 
@@ -317,5 +1033,247 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // =============================================
+    // PROTOCOL PAGE — Interactive Enhancements
+    // =============================================
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // --- Protocol Reveal Observer (staggered) ---
+      const protocolRevealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            protocolRevealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.protocol-reveal').forEach(el => {
+        protocolRevealObserver.observe(el);
+      });
+
+
+      // --- Biomarker Card Stagger Animation ---
+      const biomarkerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const cards = entry.target.querySelectorAll('.biomarker-card');
+            cards.forEach((card, i) => {
+              setTimeout(() => {
+                card.classList.add('visible');
+              }, i * 80);
+            });
+            biomarkerObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      const biomarkerGrid = document.getElementById('biomarkerGrid');
+      if (biomarkerGrid) biomarkerObserver.observe(biomarkerGrid);
+
+
+      // --- Blueprint Card Stagger Animation ---
+      const blueprintObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const cards = entry.target.querySelectorAll('.blueprint-card');
+            cards.forEach((card, i) => {
+              setTimeout(() => {
+                card.classList.add('visible');
+              }, i * 80);
+            });
+            blueprintObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const blueprintGrid = document.getElementById('blueprintGrid');
+      if (blueprintGrid) blueprintObserver.observe(blueprintGrid);
+
+
+      // --- Blueprint Card 3D Tilt Effect ---
+      document.querySelectorAll('.blueprint-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = (y - centerY) / centerY * -4;
+          const rotateY = (x - centerX) / centerX * 4;
+          card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) translateY(0)';
+        });
+      });
+
+
+      // --- Animated Stat Counters ---
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const counters = entry.target.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+              const target = parseInt(counter.dataset.count);
+              const suffix = counter.dataset.suffix || '';
+              const duration = 2000;
+              const startTime = performance.now();
+
+              const animate = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+                counter.textContent = current + suffix;
+                if (progress < 1) {
+                  requestAnimationFrame(animate);
+                }
+              };
+              requestAnimationFrame(animate);
+            });
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      const statsStrip = document.getElementById('statsStrip');
+      if (statsStrip) counterObserver.observe(statsStrip);
+
+
+      // --- Scroll-Driven Timeline ---
+      const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const fill = document.getElementById('timelineFill');
+            const nodes = document.querySelectorAll('.timeline-node');
+            const tags = document.querySelectorAll('.reassess-tag');
+
+            // Animate timeline fill
+            setTimeout(() => {
+              if (fill) fill.style.width = '100%';
+            }, 200);
+
+            // Activate nodes sequentially
+            nodes.forEach((node, i) => {
+              setTimeout(() => {
+                node.classList.add('reached');
+              }, 400 + i * 600);
+            });
+
+            // Reveal tags after timeline completes
+            tags.forEach((tag, i) => {
+              setTimeout(() => {
+                tag.classList.add('visible');
+              }, 2000 + i * 100);
+            });
+
+            timelineObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      const timelineTrack = document.getElementById('timelineTrack');
+      if (timelineTrack) timelineObserver.observe(timelineTrack);
+
+
+      // --- Sticky Stage Navigator ---
+      const stageNav = document.getElementById('stageNav');
+      const stageNavProgress = document.getElementById('stageNavProgress');
+      const stages = [
+        document.getElementById('stage1'),
+        document.getElementById('stage2'),
+        document.getElementById('stage3')
+      ];
+      const navItems = document.querySelectorAll('.stage-nav-item');
+
+      if (stageNav && stages.every(Boolean)) {
+        // Click handler for nav items
+        navItems.forEach(item => {
+          item.addEventListener('click', () => {
+            const targetId = item.dataset.target;
+            const target = document.getElementById(targetId);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+
+        // Show/hide nav based on scroll position
+        const hero = document.getElementById('protocolHero');
+        const updateStageNav = () => {
+          const scrollY = window.scrollY;
+          const heroBottom = hero ? hero.offsetTop + hero.offsetHeight - 200 : 0;
+          const stage3Bottom = stages[2].offsetTop + stages[2].offsetHeight;
+
+          // Show nav only when in stages area
+          if (scrollY > heroBottom && scrollY < stage3Bottom) {
+            stageNav.style.opacity = '1';
+            stageNav.style.pointerEvents = 'all';
+          } else {
+            stageNav.style.opacity = '0';
+            stageNav.style.pointerEvents = 'none';
+          }
+          stageNav.style.transition = 'opacity 0.4s ease';
+
+          // Determine active stage
+          let activeIndex = 0;
+          stages.forEach((stage, i) => {
+            const rect = stage.getBoundingClientRect();
+            if (rect.top <= window.innerHeight * 0.4) {
+              activeIndex = i;
+            }
+          });
+
+          // Update active states
+          navItems.forEach((item, i) => {
+            item.classList.toggle('active', i <= activeIndex);
+          });
+
+          // Update progress line
+          if (stageNavProgress) {
+            const totalHeight = navItems[navItems.length - 1].offsetTop - navItems[0].offsetTop + 12;
+            const progressHeight = (activeIndex / (stages.length - 1)) * totalHeight;
+            stageNavProgress.style.height = progressHeight + 'px';
+          }
+        };
+
+        window.addEventListener('scroll', updateStageNav, { passive: true });
+        updateStageNav();
+      }
+
+
+      // --- Hide scroll indicator on scroll ---
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+      if (scrollIndicator) {
+        let hidden = false;
+        window.addEventListener('scroll', () => {
+          if (!hidden && window.scrollY > 100) {
+            scrollIndicator.style.opacity = '0';
+            scrollIndicator.style.transition = 'opacity 0.5s ease';
+            hidden = true;
+          }
+        }, { passive: true });
+      }
+
+
+      // --- Magnetic Button Effect ---
+      document.querySelectorAll('.magnetic-btn').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translate(0, 0)';
+        });
+      });
+
+    });
+  </script>
 </body>
 </html>
